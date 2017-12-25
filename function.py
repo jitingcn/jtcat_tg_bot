@@ -16,11 +16,11 @@ def blive_stream(room_id):
     approom_param = {'room_id': room_id, 'platform': 'android', 'otype': 'json'}
     approom = requests.get(api_approom, params=approom_param)
     if approom.json()["code"] != 0:
-        return '不存在此直播间'
+        return "%s%d%s" % ('不存在', room_id, '号直播间')
     if approom.json()["data"]["schedule"]["status"] == "ROUND":
-        return '直播间正在轮播(未开播)'
+        return "%s号直播间正在轮播(未开播)" % room_id
     if approom.json()["data"]["schedule"]["status"] == "PREPARING":
-        return '直播间准备中(未开播)'
+        return "%s号直播间准备中(未开播)" % room_id
     api_playurl = 'http://api.live.bilibili.com/api/playurl'
     cid = approom.json()["data"]["room_id"]
     playurl_param = {'cid': cid, 'otype': 'json'}
@@ -29,4 +29,4 @@ def blive_stream(room_id):
         return '获取失败'
     else:
         stream_url = playurl.json()["durl"][0]["url"]
-        return stream_url
+        return "%d号直播间地址: %s" % (room_id, stream_url)
