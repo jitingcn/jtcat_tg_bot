@@ -9,3 +9,5 @@ __author__ = '寂听 <jiting@jtcat.com>'
 
 import os
 TOKEN = os.environ.get('jtcat_bot_token')
+# vim ~/.bash_profile
+# export jtcat_bot_token=""
