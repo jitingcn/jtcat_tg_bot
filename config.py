@@ -4,7 +4,7 @@
 # jtcat_tg_bot - main.py
 # Created by Jiting on 2017/12/24 22:53.
 # Blog: https://blog.jtcat.com/
-# bot config
+# bot config file
 __author__ = '寂听 <jiting@jtcat.com>'
 
 import os
