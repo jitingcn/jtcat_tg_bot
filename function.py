@@ -9,24 +9,36 @@ __author__ = '寂听 <jiting@jtcat.com>'
 import requests
 
 
-def blive_stream(room_id):
+def get_stream(room_id=74151):
     if not isinstance(room_id, int):
-        return '错误的数据类型'
+        return 'Wrong Type'
     api_approom = 'http://api.live.bilibili.com/AppRoom/index'
     approom_param = {'room_id': room_id, 'platform': 'android', 'otype': 'json'}
     approom = requests.get(api_approom, params=approom_param)
     if approom.json()["code"] != 0:
-        return "%s%d%s" % ('不存在', room_id, '号直播间')
+        return "%s %d %s" % ('Room', room_id, 'is not find.')
     if approom.json()["data"]["schedule"]["status"] == "ROUND":
-        return "%s号直播间正在轮播(未开播)" % room_id
+        return "Room %s is in round." % room_id
     if approom.json()["data"]["schedule"]["status"] == "PREPARING":
-        return "%s号直播间准备中(未开播)" % room_id
+        return "Room %s is preparing." % room_id
     api_playurl = 'http://api.live.bilibili.com/api/playurl'
     cid = approom.json()["data"]["room_id"]
     playurl_param = {'cid': cid, 'otype': 'json'}
     playurl = requests.get(api_playurl, params=playurl_param)
     if not playurl.json():
-        return '获取失败'
+        return 'Request failure'
     else:
         stream_url = playurl.json()["durl"][0]["url"]
-        return "%d号直播间地址: %s" % (room_id, stream_url)
+        return stream_url
+
+
+def dl(room_id):
+    stream_url = get_stream(room_id)
+    local_filename = stream_url.split('/')[-1].split('?')[0]
+    r = requests.get(stream_url, stream=True)
+    with open(local_filename, "wb") as f:
+        for chunk in r.iter_content(chunk_size=1024):
+            if chunk:
+                f.write(chunk)
+                f.flush()
+    return 'Download finished'

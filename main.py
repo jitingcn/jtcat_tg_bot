@@ -13,7 +13,7 @@ from telegram.ext import CommandHandler
 import logging
 from telegram import InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import InlineQueryHandler
-from function import blive_stream
+from function import get_stream
 
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
@@ -25,8 +25,8 @@ def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text="我是寂听的bot喵~")
 
 
-def blive_stream_url(bot, update, args):
-    text_blive_stream = blive_stream(int(args[0]))
+def blsu(bot, update, args):
+    text_blive_stream = get_stream(int(args[0]))
     bot.send_message(chat_id=update.message.chat_id, text=text_blive_stream)
 
 
@@ -39,8 +39,8 @@ def inline_blive_stream(bot, update):
     results.append(
         InlineQueryResultArticle(
             id=sth,
-            title='B站直播间流地址',
-            input_message_content=InputTextMessageContent(blive_stream(sth))
+            title='bilibili.com live stream url',
+            input_message_content=InputTextMessageContent(get_stream(sth))
         )
     )
     bot.answer_inline_query(update.inline_query.id, results)
@@ -55,7 +55,7 @@ dispatcher.add_handler(inline_blive_stream_handler)
 
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
-blive_stream_url_handler = CommandHandler('blive_stream_url', blive_stream_url, pass_args=True)
+blive_stream_url_handler = CommandHandler('blsu', blsu, pass_args=True)
 dispatcher.add_handler(blive_stream_url_handler)
 # unknown_handler = MessageHandler(Filters.command, unknown)
 # dispatcher.add_handler(unknown_handler)

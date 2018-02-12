@@ -11,3 +11,5 @@ import os
 TOKEN = os.environ.get('jtcat_bot_token')
 # vim ~/.bash_profile
 # export jtcat_bot_token=""
+
+# TOKEN = bot_api_token
