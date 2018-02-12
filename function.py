@@ -9,7 +9,7 @@ __author__ = '寂听 <jiting@jtcat.com>'
 import requests
 
 
-def get_stream(room_id=74151):
+def get_stream(room_id):
     if not isinstance(room_id, int):
         return 'Wrong Type'
     api_approom = 'http://api.live.bilibili.com/AppRoom/index'

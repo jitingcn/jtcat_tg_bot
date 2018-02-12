@@ -26,7 +26,11 @@ def start(bot, update):
 
 
 def blsu(bot, update, args):
-    text_blive_stream = get_stream(int(args[0]))
+    if args != '':
+        room_id = int(args[0])
+    else:
+        room_id = 74151
+    text_blive_stream = get_stream(room_id)
     bot.send_message(chat_id=update.message.chat_id, text=text_blive_stream)
 
 
