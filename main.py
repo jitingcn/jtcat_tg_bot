@@ -26,7 +26,7 @@ def start(bot, update):
 
 
 def blsu(bot, update, args):
-    if args != '':
+    if len(args) != 0:
         room_id = int(args[0])
     else:
         room_id = 74151
