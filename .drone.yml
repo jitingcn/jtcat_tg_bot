@@ -14,22 +14,3 @@ pipeline:
     #  - mv dist/main jtcat_bot
     #  - rm build/ dist/ -rf
       - tar czf jtcat_bot.tar.gz ../
-  push:
-    image: appleboy/drone-scp
-    username: jiting
-    password: $SSH_PASSWORD
-    port: 22
-    secrets: [ ssh_password ]
-    target: /home/jiting/
-    source: jtcat_bot.tar.gz
-  deploy:
-    image: appleboy/drone-ssh
-    host: us.jtnet.xyz
-    username: jiting
-    password: $SSH_PASSWORD
-    port: 22
-    secrets: [ ssh_password ]
-    script:
-      - cd /home/jiting/
-      - tar xzf jtcat_bot.tar.gz
-      - echo $(date) >> run.txt
