@@ -14,3 +14,4 @@ pipeline:
     #  - mv dist/main jtcat_bot
     #  - rm build/ dist/ -rf
       - tar czf jtcat_bot.tar.gz ../
+      - python main.py
