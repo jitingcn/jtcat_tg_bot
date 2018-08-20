@@ -1,6 +1,6 @@
 pipeline:
   build:
-    image: python/alpine
+    image: python:alpine
     pull: true
     secrets: [ jtcat_bot_token ]
     commands:
