@@ -8,7 +8,7 @@ pipeline:
       - ln -s /lib /lib64
       - ln -s /lib/libc.musl-x86_64.so.1 ldd
       - apk add --update py-pip
-    #  - pip install -r requirements.txt
+      - pip install -r requirements.txt
       - python test.py
     #  - pyinstaller -F main.py
     #  - mv dist/main jtcat_bot
