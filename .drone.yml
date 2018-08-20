@@ -8,11 +8,12 @@ pipeline:
       - ln -s /lib /lib64
       - ln -s /lib/libc.musl-x86_64.so.1 ldd
       - apk add --update py-pip
-      - pip install -r requirements.txt
+    #  - pip install -r requirements.txt
       - python test.py
-      - pyinstaller -F main.py
-      - mv dist/main jtcat_bot
-      - rm build/ dist/ -rf
+    #  - pyinstaller -F main.py
+    #  - mv dist/main jtcat_bot
+    #  - rm build/ dist/ -rf
+      - tar czf jtcat_bot.tar.gz ../
   deploy:
     image: appleboy/drone-scp
     host:
@@ -22,7 +23,7 @@ pipeline:
     secrets: [ ssh_password ]
     target: /home/jiting/
     source:
-      - jtcat_bot
+      - jtcat_bot.tar.gz
   run:
     image: appleboy/drone-ssh
     host: us.jtnet.xyz
@@ -31,4 +32,5 @@ pipeline:
     secrets: [ ssh_password ]
     script:
       - cd /home/jiting/
+      - tar xzf jtcat_bot.tar.gz
       - echo $(date) >> run.txt
