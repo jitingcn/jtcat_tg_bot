@@ -6,8 +6,6 @@ idna==2.7
 macholib==1.10
 pefile==2018.8.8
 PyInstaller==3.3.1
-pypiwin32==223
 python-telegram-bot==10.1.0
-pywin32==223
 requests==2.19.1
 urllib3==1.23
