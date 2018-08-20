@@ -1,13 +1,15 @@
 pipeline:
   build:
-    image: python:latest
+    image: python:alpine
     pull: true
     secrets: [ jtcat_bot_token ]
     commands:
       - export jtcat_bot_token=$JTCAT_BOT_TOKEN
-      - apt install python3-pip
-      - pip3 install -r requirements.txt
-      - python3 test.py
+      - ln -s /lib /lib64
+      - ln -s /lib/libc.musl-x86_64.so.1 ldd
+      - apk add --update py-pip
+      - pip install -r requirements.txt
+      - python test.py
       - pyinstaller -F main.py
       - mv dist/main jtcat_bot
       - rm build/ dist/ -rf
