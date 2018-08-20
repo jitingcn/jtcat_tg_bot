@@ -1,0 +1,32 @@
+pipeline:
+  build:
+    image: python: alpine
+    pull: true
+    secrets: [ jtcat_bot_token ]
+    commands:
+      - export jtcat_bot_token=$JTCAT_BOT_TOKEN
+      - apk add --update py-pip
+      - pip install -r requirements.txt
+      - python test.py
+      - pyinstaller -F main.py
+      - mv dist/main jtcat_bot
+      - rm build/ dist/ -rf
+  deploy:
+    image: appleboy/drone-scp
+    host:
+      - us.jtnet.xyz
+    user: jiting
+    port: 22
+    secrets: [ ssh_password ]
+    target: /home/jiting/
+    source:
+      - jtcat_bot
+  run:
+    image: appleboy/drone-ssh
+    host: us.jtnet.xyz
+    username: jiting
+    port: 22
+    secrets: [ ssh_password ]
+    script:
+      - cd /home/jiting/
+      - echo $(date) >> run.txt
