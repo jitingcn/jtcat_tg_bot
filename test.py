@@ -9,6 +9,6 @@
 
 from function import get_stream
 
-my_room = get_stream(74151)
-assert my_room is "Room 74151 is preparing." or my_room is "Room 74151 is in round."
+print(get_stream(74151))
+print(get_stream(-1))
 print(get_stream(3))
